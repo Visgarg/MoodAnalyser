@@ -11,7 +11,7 @@ namespace MoodAnalyserMSTest
         [TestInitialize]
         public void Setup()
         {
-             moodAnalyserClass = new MoodAnalyserClass("I am in sad mood");
+             moodAnalyserClass = new MoodAnalyserClass("I am in any mood");
         }
         [TestMethod]
         public void GivenSadMoodShouldReturnSAD()

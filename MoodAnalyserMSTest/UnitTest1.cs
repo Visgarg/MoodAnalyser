@@ -12,7 +12,7 @@ namespace MoodAnalyserMSTest
         [TestInitialize]
         public void Setup()
         {
-             moodAnalyserClass = new MoodAnalyserClass(null);
+             moodAnalyserClass = new MoodAnalyserClass("");
         }
         [TestMethod]
         public void GivenSadMoodShouldReturnSAD()
@@ -54,7 +54,34 @@ namespace MoodAnalyserMSTest
 
             }
         }
-
+        [TestMethod]
+        public void GivenNullShouldReturnCustomException()
+        {
+            try
+            {
+                //Add
+                string actual = moodAnalyserClass.AnalyseMood();
+            }
+            catch(MoodAnalyserCustomException ex)
+            {
+                string expected = ex.Message;
+                Assert.AreEqual(expected, "Mood should not be passed as a null value");
+            }
+        }
+        [TestMethod]
+        public void GivenEmptyStringShouldReturnCustomException()
+        {
+            try
+            {
+                //Add
+                string actual = moodAnalyserClass.AnalyseMood();
+            }
+            catch (MoodAnalyserCustomException ex)
+            {
+                string expected = ex.Message;
+                Assert.AreEqual(expected, "Mood should not be empty");
+            }
+        }
 
     }
 }

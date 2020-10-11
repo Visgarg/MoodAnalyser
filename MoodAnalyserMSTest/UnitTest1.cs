@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoodAnalyser;
+using System;
 using System.Runtime.InteropServices;
 
 namespace MoodAnalyserMSTest
@@ -11,16 +12,13 @@ namespace MoodAnalyserMSTest
         [TestInitialize]
         public void Setup()
         {
-             moodAnalyserClass = new MoodAnalyserClass("I am in any mood");
+             moodAnalyserClass = new MoodAnalyserClass(null);
         }
         [TestMethod]
         public void GivenSadMoodShouldReturnSAD()
         {
             //Arrange
             string expected = "SAD";
-             //string message = "I am in Sad Mood";
-            //MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass(message);
-
             //Act
             string actual = moodAnalyserClass.AnalyseMood();
             //Assert
@@ -39,5 +37,24 @@ namespace MoodAnalyserMSTest
             Assert.AreEqual(expected, actual);
             
         }
+        [TestMethod]    
+       // [ExpectedException(typeof(NullReferenceException))]
+        public void GivenNullShouldReturnHappy()
+        {
+            //Arrange
+            try
+            {
+                throw new NullReferenceException();
+            }
+            catch(NullReferenceException ex)
+            {
+                string expected = "Happy " + ex.Message;
+                string actual= moodAnalyserClass.AnalyseMood();
+                Assert.AreEqual(expected, actual);
+
+            }
+        }
+
+
     }
 }

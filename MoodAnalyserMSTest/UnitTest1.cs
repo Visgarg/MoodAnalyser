@@ -91,6 +91,12 @@ namespace MoodAnalyserMSTest
             expected.Equals(actual);
             //Assert.AreEqual(expected, actual) -> this can not be used, as we are not testing strings.or other data type, here it is object.
         }
-
+        [TestMethod]
+        public void GivenMoodAnalyseClassName_ShouldReturnMoodAnalyseObject_UsingParameterizedConstructor()
+        {
+            string message = "Happy";
+            object expected = new MoodAnalyserClass(message);
+            object actual = MoodAnalyserFactory.CreateMoodAnalyseObjectUsingParamaterizedConstructor("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass", "Happy");
+        }
     }
 }

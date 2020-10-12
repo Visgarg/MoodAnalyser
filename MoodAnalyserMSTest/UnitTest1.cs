@@ -82,6 +82,15 @@ namespace MoodAnalyserMSTest
                 Assert.AreEqual(expected, "Mood should not be empty");
             }
         }
+        [TestMethod]
+        public void GivenMoodAnalyseClassName_ShouldReturnMoodAnalyseObject()
+        {
+            string message = null;
+            object expected = new MoodAnalyserClass(message);
+           object actual= MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass");
+            expected.Equals(actual);
+            //Assert.AreEqual(expected, actual) -> this can not be used, as we are not testing strings.or other data type, here it is object.
+        }
 
     }
 }

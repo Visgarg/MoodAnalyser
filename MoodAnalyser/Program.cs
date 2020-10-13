@@ -16,7 +16,7 @@ namespace MoodAnalyser
             catch(MoodAnalyserCustomException ex)
             {
                 Console.WriteLine(ex.GetType().Name + ex.Message);
-                Console.WriteLine(ex);
+                //Console.WriteLine(ex);
 
             }
 

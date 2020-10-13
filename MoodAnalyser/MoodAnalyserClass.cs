@@ -32,7 +32,7 @@ namespace MoodAnalyser
                     return "HAPPY";
                 }
             }
-            catch(NullReferenceException /*ex*/ )
+            catch(Exception)
             {
                 // return "Happy "+ex.Message;
                 throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NULL_MESSAGE, "Mood should not be passed as a null value");

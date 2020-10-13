@@ -10,13 +10,13 @@ namespace MoodAnalyser
             {
                 Console.WriteLine("Welcome to Mood Analyser Problem");
                 //MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass(null);
+                string field= MoodAnalyserFactory.GetFieldForMoodAnalysis("HAPPY", "mesage");
+                object moodAnalyserClass=MoodAnalyserFactory.CreateMoodAnalyseObjectUsingParamaterizedConstructor("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass", field);
+                MoodAnalyserClass mood = (MoodAnalyserClass)moodAnalyserClass;
+                string moodOutput = mood.AnalyseMood();
+                Console.WriteLine(moodOutput);
 
-                //object moodAnalyserClass=MoodAnalyserFactory.CreateMoodAnalyseObjectUsingParamaterizedConstructor("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass", null);
-                //MoodAnalyserClass mood = (MoodAnalyserClass)moodAnalyserClass;
-                //string moodOutput = mood.AnalyseMood();
-                //Console.WriteLine(moodOutput);
-
-                object moodAnalyserClass = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass");
+                //object moodAnalyserClass = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass");
                 
                 //string mood= MoodAnalyserFactory.InvokeAnalyserMethod("happy", "AnalyseMood");
                 //Console.WriteLine(mood);

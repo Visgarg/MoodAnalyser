@@ -185,6 +185,52 @@ namespace MoodAnalyserMSTest
                 Assert.AreEqual(expected, ex.Message);
             }
         }
+        [TestMethod]
+        public void SettingFieldValueandReturnUsingInvokeMethod()
+        {
+            string expected = "HAPPY";
+            string mood = MoodAnalyserFactory.GetFieldForMoodAnalysis("happy", "message");
+            MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass();
+            //string actual = moodAnalyserClass.AnalyseMood();    -----> ask this doubt.
+            string actual = MoodAnalyserFactory.InvokeAnalyserMethod(mood, "AnalyseMood");
+            Assert.AreEqual(actual, expected);
+        }
+        [TestMethod]
+        public void SettingIncorrectFieldValueAndReturingCustomException()
+        {
+            try
+            {
+                string expected = "happy";
+                string mood = MoodAnalyserFactory.GetFieldForMoodAnalysis("happy", "mesage");
+                MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass();
+                //string actual = moodAnalyserClass.AnalyseMood();    -----> ask this doubt.
+                string actual = MoodAnalyserFactory.InvokeAnalyserMethod(mood, "AnalyseMood");
+                Assert.AreEqual(actual, expected);
+            }
+            catch(MoodAnalyserCustomException ex)
+            {
+                string expected = "field not found";
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+        [TestMethod]
+        public void SettingIncorrectMessageValueAndReturingCustomException()
+        {
+            try
+            {
+                string expected = "happy";
+                string mood = MoodAnalyserFactory.GetFieldForMoodAnalysis(null, "message");
+                MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass();
+                //string actual = moodAnalyserClass.AnalyseMood();    -----> ask this doubt.
+                string actual = MoodAnalyserFactory.InvokeAnalyserMethod(mood, "AnalyseMood");
+                Assert.AreEqual(actual, expected);
+            }
+            catch (MoodAnalyserCustomException ex)
+            {
+                string expected = "null value found.";
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
     }
         
 }

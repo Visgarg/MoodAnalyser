@@ -18,10 +18,10 @@ namespace MoodAnalyser
                 Match result = Regex.Match(className, pattern);
                 if (result.Success)
                 {
-      
-                        Assembly executing = Assembly.GetExecutingAssembly();
-                        Type moodAnalyseType = executing.GetType(className);
-                        return Activator.CreateInstance(moodAnalyseType);
+
+                    Assembly executing = Assembly.GetExecutingAssembly();
+                    Type moodAnalyseType = executing.GetType(className);
+                    return Activator.CreateInstance(moodAnalyseType);
                 }
                 else
                 {
@@ -33,12 +33,12 @@ namespace MoodAnalyser
                 throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_CLASS, "No class found");
             }
         }
-        public  static object CreateMoodAnalyseObjectUsingParamaterizedConstructor(string className, string constructorName, string message)
+        public static object CreateMoodAnalyseObjectUsingParamaterizedConstructor(string className, string constructorName, string message)
         {
             Type type = typeof(MoodAnalyserClass);
-            if(type.Name.Equals(className)|| type.FullName.Equals(className))
+            if (type.Name.Equals(className) || type.FullName.Equals(className))
             {
-                if(type.Name.Equals(constructorName))
+                if (type.Name.Equals(constructorName))
                 {
                     /*ConstructorInfo construct = type.GetConstructor(new[] { typeof(string) });
                     object objects = construct.Invoke(new object[] { message });
@@ -68,11 +68,30 @@ namespace MoodAnalyser
                 object AnalyseMood = methodInfo.Invoke(moodAnalyserObject, null);
                 return AnalyseMood.ToString();
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
                 throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_METHOD, "method not found");
             }
 
+        }
+        public static string GetFieldForMoodAnalysis(string message, string fieldName)
+        {
+            try
+            {
+                MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass();
+                Type type = typeof(MoodAnalyserClass);
+                FieldInfo fieldInfo = type.GetField(fieldName);
+                if(message==null)
+                {
+                    throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NULL_MESSAGE, "null value found.");
+                }
+                fieldInfo.SetValue(moodAnalyserClass, message);
+                return fieldInfo.ToString() ;
+            }
+            catch(NullReferenceException)
+            {
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_FIELD, "field not found");
+            }
         }
     }
 }

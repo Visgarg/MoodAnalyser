@@ -6,7 +6,7 @@ namespace MoodAnalyser
 {
     public class MoodAnalyserClass
     {
-        private string message;
+        public string message;
         public MoodAnalyserClass(string message)
         {
             this.message = message;
@@ -19,7 +19,7 @@ namespace MoodAnalyser
         {
             try
             {
-                if(this.message.Contains(string.Empty))
+                if(message=="")
                 {
                     throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.EMPTY_MESSAGE, "Mood should not be empty");
                 }
@@ -32,7 +32,7 @@ namespace MoodAnalyser
                     return "HAPPY";
                 }
             }
-            catch(Exception)
+            catch(NullReferenceException)
             {
                 // return "Happy "+ex.Message;
                 throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NULL_MESSAGE, "Mood should not be passed as a null value");

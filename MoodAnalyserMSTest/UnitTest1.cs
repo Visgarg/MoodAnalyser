@@ -189,7 +189,7 @@ namespace MoodAnalyserMSTest
         public void SettingFieldValueandReturnUsingInvokeMethod()
         {
             string expected = "HAPPY";
-            string mood = MoodAnalyserFactory.GetFieldForMoodAnalysis("happy", "message");
+            string mood = MoodAnalyserFactory.GetFieldForMoodAnalysis("happy", "message"); //why this method did not save value in the message field of moodAnalyserClass, as i am getting message field and storing value in it.
             MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass();
             //string actual = moodAnalyserClass.AnalyseMood();    -----> ask this doubt.
             string actual = MoodAnalyserFactory.InvokeAnalyserMethod(mood, "AnalyseMood");

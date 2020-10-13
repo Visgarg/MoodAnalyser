@@ -19,7 +19,7 @@ namespace MoodAnalyser
         {
             try
             {
-                if(this.message.Equals(string.Empty))
+                if(message=="")
                 {
                     throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.EMPTY_MESSAGE, "Mood should not be empty");
                 }

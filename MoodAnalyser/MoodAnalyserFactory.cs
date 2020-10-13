@@ -33,7 +33,8 @@ namespace MoodAnalyser
                 throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_CLASS, "No class found");
             }
         }
-        public static object CreateMoodAnalyseObjectUsingParamaterizedConstructor(string className, string constructorName, string message)
+        //using optional parameters to create a method that can be used for both parametrized and default constructor.
+        public static object CreateMoodAnalyseObjectUsingParamaterizedConstructor(string className, string constructorName, string message="default")
         {
             Type type = typeof(MoodAnalyserClass);
             if (type.Name.Equals(className) || type.FullName.Equals(className))
@@ -45,7 +46,12 @@ namespace MoodAnalyser
                     return objects;*/
                     Assembly Executing = Assembly.GetExecutingAssembly();
                     Type moodAnalyseType = Executing.GetType(className);
-                    return Activator.CreateInstance(moodAnalyseType, message);
+                    if(message=="default")
+                    {
+                        return Activator.CreateInstance(moodAnalyseType);
+                    }
+                    else 
+                        return Activator.CreateInstance(moodAnalyseType, message);
                 }
                 else
                 {

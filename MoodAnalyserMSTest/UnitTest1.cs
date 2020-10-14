@@ -189,9 +189,8 @@ namespace MoodAnalyserMSTest
         public void SettingFieldValueandReturnUsingInvokeMethod()
         {
             string expected = "HAPPY";
-            string mood = MoodAnalyserFactory.GetFieldForMoodAnalysis("happy", "message"); //why this method did not save value in the message field of moodAnalyserClass, as i am getting message field and storing value in it.
-            MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass();
-            //string actual = moodAnalyserClass.AnalyseMood();    -----> ask this doubt.
+            string mood = MoodAnalyserFactory.GetFieldForMoodAnalysis("happy", "message"); 
+            //string actual = moodAnalyserClass.AnalyseMood(); calling this method will invoke default constructor and override the message field passed earlier using the method of mood analyser factory to create field at run time.
             string actual = MoodAnalyserFactory.InvokeAnalyserMethod(mood, "AnalyseMood");
             Assert.AreEqual(actual, expected);
         }

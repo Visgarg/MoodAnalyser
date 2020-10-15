@@ -9,11 +9,17 @@ namespace MoodAnalyserMSTest
     public class UnitTest1
     {
         MoodAnalyserClass moodAnalyserClass;
+        /// <summary>
+        /// creating the object of mood analyse class, every time a test method is run.
+        /// </summary>
         [TestInitialize]
         public void Setup()
         {
             moodAnalyserClass = new MoodAnalyserClass("");
         }
+        /// <summary>
+        /// Testing analyse mood by passing expected value and actual value as sad.
+        /// </summary>
         [TestMethod]
         public void GivenSadMoodShouldReturnSAD()
         {
@@ -25,6 +31,9 @@ namespace MoodAnalyserMSTest
             Assert.AreEqual(expected, actual);
 
         }
+        /// <summary>
+        /// Testing analyse mood and giving happy when any mood is passed other than happy.
+        /// </summary>
         [TestMethod]
         public void GivenAnyMoodShouldReturnHAPPY()
         {
@@ -37,6 +46,9 @@ namespace MoodAnalyserMSTest
             Assert.AreEqual(expected, actual);
 
         }
+        /// <summary>
+        /// when null value is passed to the analyse mood, it returns exception.
+        /// </summary>
         [TestMethod]
         // [ExpectedException(typeof(NullReferenceException))]
         public void GivenNullShouldReturnHappy()
@@ -46,7 +58,7 @@ namespace MoodAnalyserMSTest
             {
                 throw new NullReferenceException();
             }
-            catch (NullReferenceException ex)
+            catch (Exception ex)
             {
                 string expected = "Happy " + ex.Message;
                 string actual = moodAnalyserClass.AnalyseMood();
@@ -54,6 +66,9 @@ namespace MoodAnalyserMSTest
 
             }
         }
+        /// <summary>
+        /// passing null in mood analyse method to get custom exception
+        /// </summary>
         [TestMethod]
         public void GivenNullShouldReturnCustomException()
         {
@@ -68,6 +83,9 @@ namespace MoodAnalyserMSTest
                 Assert.AreEqual(expected, "Mood should not be passed as a null value");
             }
         }
+        /// <summary>
+        /// passing empty string in mood analyser to get custom exception
+        /// </summary>
         [TestMethod]
         public void GivenEmptyStringShouldReturnCustomException()
         {
@@ -82,6 +100,9 @@ namespace MoodAnalyserMSTest
                 Assert.AreEqual(expected, "Mood should not be empty");
             }
         }
+        /// <summary>
+        /// Validating Mood analyser object with default constructor to return a mood analyser class object
+        /// </summary>
         [TestMethod]
         public void GivenMoodAnalyseClassName_ShouldReturnMoodAnalyseObject()
         {
@@ -91,6 +112,9 @@ namespace MoodAnalyserMSTest
             expected.Equals(actual);
             //Assert.AreEqual(expected, actual) -> this can not be used, as we are not testing strings.or other data type, here it is object.
         }
+        /// <summary>
+        /// Validating mood analyser object with default constructor to return exception when passed incorrect class name
+        /// </summary>
         [TestMethod]
         public void GivenClassNameWhenImproperShouldThrowMoodAnalysisExceptionWhenPassedInMoodAnalyseObjectInReflection()
         {
@@ -107,6 +131,9 @@ namespace MoodAnalyserMSTest
                 expected.Equals(ex.Message);
             }
         }
+        /// <summary>
+        /// Validating mood analyser object with default constructor to return exception when passed incorrect constructor name
+        /// </summary>
         [TestMethod]
         public void GivenClassNameWhenImproperConstructorShouldThrowMoodAnalysisExceptionWhenPassedInMoodAnalyseObjectInReflection()
         {
@@ -123,6 +150,9 @@ namespace MoodAnalyserMSTest
                 expected.Equals(ex.Message);
             }
         }
+        /// <summary>
+        /// Validating Mood analyser object with parametrized constructor to return a mood analyser class object
+        /// </summary>
         [TestMethod]
         public void GivenMoodAnalyseClassName_ShouldReturnMoodAnalyseObject_UsingParameterizedConstructor()
         {
@@ -138,6 +168,9 @@ namespace MoodAnalyserMSTest
             string actual = MoodAnalyserFactory.InvokeAnalyserMethod("Happy", "AnalyseMood");
             Assert.AreEqual(expected, actual);
         }
+        /// <summary>
+        /// Validating mood analyser object with parametrized constructor to return exception when passed incorrect class name
+        /// </summary>
         [TestMethod]
         public void GivenClassNameWhenImproper_ShouldThrowMoodAnalysisExceptionWhenPassedIn_ParametrizedMoodAnalyseObjectInReflection()
         {
@@ -154,6 +187,9 @@ namespace MoodAnalyserMSTest
                 expected.Equals(ex.Message);
             }
         }
+        /// <summary>
+        /// Validating mood analyser object with default constructor to return exception when passed incorrect constructor name
+        /// </summary>
         [TestMethod]
         public void GivenClassNameWithImproperConstructor_ShouldThrowMoodAnalysisException_WhenPassedInParametrizedMoodAnalyseObjectInReflection()
         {
@@ -170,40 +206,50 @@ namespace MoodAnalyserMSTest
                 expected.Equals(ex.Message);
             }
         }
+        /// <summary>
+        /// Validating Invoke method from mood analyser factory by passing different values in datarow.
+        /// </summary>
+        [DataRow("Happy","AnalyseMood","HAPPY")]
+        [DataRow("Happy", "AnalysMood", "method not found")]
         [TestMethod]
-        public void GivenMessageAndWrongMethodReturnExceptionWhenCallingInvokeMethodUsingReflection()
+
+        public void GivenMessageAndWrongMethodReturnExceptionWhenCallingInvokeMethodUsingReflection(string message,string method, string expected)
         {
             try
             {
-                string expected = "HAPPY";
-                string actual = MoodAnalyserFactory.InvokeAnalyserMethod("Happy", "AnalysMood");
+                string actual = MoodAnalyserFactory.InvokeAnalyserMethod(message, method);
                 Assert.AreEqual(expected, actual);
             }
             catch(MoodAnalyserCustomException ex)
             {
-                string expected = "method not found";
                 Assert.AreEqual(expected, ex.Message);
             }
         }
+        /// <summary>
+        /// Setting up field value in mood analyser factory and returning class to call analyse mood to validate mood 
+        /// </summary>
         [TestMethod]
-        public void SettingFieldValueandReturnUsingInvokeMethod()
+        public void SettingFieldValueandReturnUsingMoodAnalyserClass()
         {
             string expected = "HAPPY";
-            string mood = MoodAnalyserFactory.GetFieldForMoodAnalysis("happy", "message"); 
-            //string actual = moodAnalyserClass.AnalyseMood(); calling this method will invoke default constructor and override the message field passed earlier using the method of mood analyser factory to create field at run time.
-            string actual = MoodAnalyserFactory.InvokeAnalyserMethod(mood, "AnalyseMood");
+            MoodAnalyserClass moodAnayserClass= (MoodAnalyserClass)MoodAnalyserFactory.GetFieldForMoodAnalysis("happy", "message"); 
+            string actual = moodAnalyserClass.AnalyseMood(); 
+            //string actual = MoodAnalyserFactory.InvokeAnalyserMethod(mood, "AnalyseMood");
             Assert.AreEqual(actual, expected);
         }
+        /// <summary>
+        /// setting up incorrect field value in mood analyser factory and validating for exception
+        /// </summary>
         [TestMethod]
         public void SettingIncorrectFieldValueAndReturingCustomException()
         {
             try
             {
                 string expected = "happy";
-                string mood = MoodAnalyserFactory.GetFieldForMoodAnalysis("happy", "mesage");
-                MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass();
-                //string actual = moodAnalyserClass.AnalyseMood();    -----> ask this doubt.
-                string actual = MoodAnalyserFactory.InvokeAnalyserMethod(mood, "AnalyseMood");
+                MoodAnalyserClass moodAnalyser = (MoodAnalyserClass)MoodAnalyserFactory.GetFieldForMoodAnalysis("happy", "mesage");
+                //MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass();
+                string actual = moodAnalyser.AnalyseMood();   
+                //string actual = MoodAnalyserFactory.InvokeAnalyserMethod(mood, "AnalyseMood");
                 Assert.AreEqual(actual, expected);
             }
             catch(MoodAnalyserCustomException ex)
@@ -212,16 +258,18 @@ namespace MoodAnalyserMSTest
                 Assert.AreEqual(expected, ex.Message);
             }
         }
+        /// <summary>
+        /// passing null value in field value in mood analyser factory and validate for exception
+        /// </summary>
         [TestMethod]
         public void SettingIncorrectMessageValueAndReturingCustomException()
         {
             try
             {
                 string expected = "happy";
-                string mood = MoodAnalyserFactory.GetFieldForMoodAnalysis(null, "message");
-                MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass();
-                //string actual = moodAnalyserClass.AnalyseMood();    -----> ask this doubt.
-                string actual = MoodAnalyserFactory.InvokeAnalyserMethod(mood, "AnalyseMood");
+                MoodAnalyserClass moodAnalyserClass1= (MoodAnalyserClass)MoodAnalyserFactory.GetFieldForMoodAnalysis(null, "message");
+                string actual = moodAnalyserClass.AnalyseMood();    
+                //string actual = MoodAnalyserFactory.InvokeAnalyserMethod(mood, "AnalyseMood");
                 Assert.AreEqual(actual, expected);
             }
             catch (MoodAnalyserCustomException ex)

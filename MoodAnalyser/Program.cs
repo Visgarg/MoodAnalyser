@@ -14,21 +14,23 @@ namespace MoodAnalyser
                 //MoodAnalyserClass moodAnalyserClass = new MoodAnalyserClass(null);
 
                 //Get field for mood analysis method is called from mood analyser factory to pass a field message dynamically. 
-                string field= MoodAnalyserFactory.GetFieldForMoodAnalysis("HAPPY", "message"); 
+                MoodAnalyserClass moodAnalyserClass1= (MoodAnalyserClass)MoodAnalyserFactory.GetFieldForMoodAnalysis("HAPPY", "message");
+                string moodOutput1= moodAnalyserClass1.AnalyseMood();
+                Console.WriteLine(moodOutput1);
                 //field from mood analyser factory is called and passed to parametrized object in mood analyser factory.
-                object moodAnalyserClass=MoodAnalyserFactory.CreateMoodAnalyseObjectUsingParamaterizedConstructor("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass", field); 
+                object moodAnalyserClass2=MoodAnalyserFactory.CreateMoodAnalyseObjectUsingParamaterizedConstructor("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass", "happy"); 
                 // object is converted into instance of mood analyser class.
-                MoodAnalyserClass mood = (MoodAnalyserClass)moodAnalyserClass;
+                MoodAnalyserClass mood = (MoodAnalyserClass)moodAnalyserClass2;
                 //Analyse method method is called using class.
                 string moodOutput = mood.AnalyseMood();
                 Console.WriteLine(moodOutput);
 
                 // creating a object with default constructor in mood analyser factory using reflection
-                //object moodAnalyserClass = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass");
+                 object moodAnalyserClass3 = MoodAnalyserFactory.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass");
 
                 //Directly calling method class from Mood analyser factory using reflection.
-                //string mood= MoodAnalyserFactory.InvokeAnalyserMethod("happy", "AnalyseMood");
-                //Console.WriteLine(mood);
+                string moodOutput2= MoodAnalyserFactory.InvokeAnalyserMethod("happy", "AnalyseMood");
+                Console.WriteLine(moodOutput2);
             }
             catch (MoodAnalyserCustomException ex)
             {

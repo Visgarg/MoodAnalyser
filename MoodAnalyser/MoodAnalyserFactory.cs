@@ -140,7 +140,7 @@ namespace MoodAnalyser
         /// or
         /// field not found
         /// </exception>
-        public static string GetFieldForMoodAnalysis(string message, string fieldName)
+        public static object GetFieldForMoodAnalysis(string message, string fieldName)
         {
             try
             {
@@ -156,9 +156,8 @@ namespace MoodAnalyser
                 }
                 //field info is set with value by passing object and value
                 fieldInfo.SetValue(moodAnalyserClass, message);
-                //value is returned
-                //value can also be returned using moodAnalyserClass.message;
-                return fieldInfo.ToString() ;
+                //class is returned with field value initialized
+                return moodAnalyserClass ;
             }
             catch(NullReferenceException)
             {
